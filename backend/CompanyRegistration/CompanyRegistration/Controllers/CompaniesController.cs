@@ -8,6 +8,7 @@ using CompanyRegistration.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace CompanyRegistration.Controllers
 {
@@ -52,12 +53,12 @@ namespace CompanyRegistration.Controllers
 
             var json = await response.Content.ReadAsStringAsync();
 
-            var cnpjResponse = JsonSerializer.Deserialize<CnpjResponse>(json, new JsonSerializerOptions
+            var cnpjResponse = JsonSerializer.Deserialize<CnpjResponseDto>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
 
-            if (cnpjResponse == null || cnpjResponse.Status != "OK")
+            if (cnpjResponse == null)
                 return BadRequest("Não foi possível obter dados do CNPJ");
 
             var company = new Company
@@ -77,7 +78,7 @@ namespace CompanyRegistration.Controllers
                 Bairro = cnpjResponse.Bairro ?? "",
                 Municipio = cnpjResponse.Municipio ?? "",
                 Uf = cnpjResponse.Uf ?? "",
-                Cep = cnpjResponse.Cep ?? ""
+                Cep = new string((cnpjResponse.Cep ?? "").Where(char.IsDigit).ToArray()),
             };
 
             _context.Companies.Add(company);
@@ -100,9 +101,28 @@ namespace CompanyRegistration.Controllers
                 .ToListAsync();
 
             if (companies == null)
-                return BadRequest("Nenhuma empresa encontrada");
+                return NotFound("Nenhuma empresa encontrada");
 
-            return Ok(companies);
+            var response = companies.Select(c => new CompanyResponseDto
+            {
+                Nome = c.NomeEmpresarial,
+                Fantasia = c.NomeFantasia,
+                Cnpj = $"{Convert.ToUInt64(c.Cnpj):00\\.000\\.000\\/0000\\-00}",
+                Situacao = c.Situacao,
+                Abertura = c.Abertura == DateTime.MinValue ? null : c.Abertura.ToString("dd/MM/yyyy"),
+                Tipo = c.Tipo,
+                NaturezaJuridica = c.NaturezaJuridica,
+                AtividadePrincipal = c.AtividadePrincipal,
+                Logradouro = c.Logradouro,
+                Numero = c.Numero,
+                Complemento = c.Complemento,
+                Bairro = c.Bairro,
+                Municipio = c.Municipio,
+                Uf = c.Uf,
+                Cep = !string.IsNullOrEmpty(c.Cep) && c.Cep.Length == 8 ? $"{c.Cep.Substring(0,5)}-{c.Cep.Substring(5, 3)}" : null
+            });
+
+            return Ok(response);
         }
     }
 }

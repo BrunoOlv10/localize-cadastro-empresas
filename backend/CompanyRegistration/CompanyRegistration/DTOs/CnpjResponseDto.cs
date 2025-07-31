@@ -2,9 +2,8 @@
 
 namespace CompanyRegistration.DTOs
 {
-    public class CnpjResponse
+    public class CnpjResponseDto
     {
-        public string? Status { get; set; }
 
         public string? Nome { get; set; }
 
