@@ -100,6 +100,9 @@ StyleCopReport.xml
 *.svclog
 *.scc
 
+# Config files to ignore
+backend/CompanyRegistration/CompanyRegistration/appsettings.json
+
 # Chutzpah Test files
 _Chutzpah*
 
