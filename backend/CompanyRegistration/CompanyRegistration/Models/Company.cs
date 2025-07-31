@@ -18,7 +18,6 @@
         public string Municipio { get; set; } = string.Empty;
         public string Uf { get; set; } = string.Empty;
         public string Cep { get; set; } = string.Empty;
-
         public int UserId { get; set; }
     }
 }

@@ -4,7 +4,6 @@ namespace CompanyRegistration.DTOs
 {
     public class CnpjResponseDto
     {
-
         public string? Nome { get; set; }
 
         public string? Fantasia { get; set; }

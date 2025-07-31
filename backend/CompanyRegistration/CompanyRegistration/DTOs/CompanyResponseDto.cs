@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace CompanyRegistration.DTOs
+﻿namespace CompanyRegistration.DTOs
 {
     public class CompanyResponseDto
     {

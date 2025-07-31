@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CompanyRegistration.Models;
-using CompanyRegistration.Data;
-using CompanyRegistration.DTOs;
-using CompanyRegistration.Helpers;
-using Microsoft.EntityFrameworkCore;
+﻿using CompanyRegistration.DTOs;
+using CompanyRegistration.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyRegistration.Controllers
 {
@@ -11,30 +8,20 @@ namespace CompanyRegistration.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly AppDbContext _context;
-        private readonly IConfiguration _configuration;
+        private readonly AuthService _authService;
 
-        public AuthController(AppDbContext context, IConfiguration configuration)
+        public AuthController(AuthService authService)
         {
-            _context = context;
-            _configuration = configuration;
+            _authService = authService;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterDto dto)
         {
-            if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
+            if (await _authService.IsEmailRegistered(dto.Email))
                 return BadRequest("Email já cadastrado.");
 
-            var user = new User
-            {
-                Nome = dto.Nome!,
-                Email = dto.Email!,
-                SenhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Senha)
-            };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            var user = await _authService.RegisterAsync(dto);
 
             return Ok("Usuário registrado com sucesso.");
         }
@@ -42,14 +29,15 @@ namespace CompanyRegistration.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto dto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
-
-            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Senha, user.SenhaHash))
-                return Unauthorized("Email ou senha inválidos.");
-
-            var token = TokenService.GenerateToken(user, _configuration["Jwt:Key"]!);
-
-            return Ok(new { token });
+            try
+            {
+                var token = await _authService.LoginAsync(dto);
+                return Ok(new { token });
+            }
+            catch (ArgumentException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
         }
     }
 }

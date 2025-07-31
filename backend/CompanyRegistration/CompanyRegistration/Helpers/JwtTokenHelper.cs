@@ -6,7 +6,7 @@ using CompanyRegistration.Models;
 
 namespace CompanyRegistration.Helpers
 {
-    public class TokenService
+    public class JwtTokenHelper
     {
         public static string GenerateToken(User user, string key)
         {
