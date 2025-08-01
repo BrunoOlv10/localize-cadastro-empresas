@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
 export class NavbarComponent {
     constructor(private router: Router) {} 
 
-    onLogin(): void {
+    logout(): void {
+      sessionStorage.removeItem('token');
       this.router.navigate(['/'])
     }
 }

@@ -23,7 +23,7 @@ namespace CompanyRegistration.Controllers
 
             var user = await _authService.RegisterAsync(dto);
 
-            return Ok("Usuário registrado com sucesso.");
+            return Ok(new { message = "Usuário registrado com sucesso." });
         }
 
         [HttpPost("login")]
