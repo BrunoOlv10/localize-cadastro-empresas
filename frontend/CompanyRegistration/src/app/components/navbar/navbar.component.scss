@@ -1,0 +1,41 @@
+@use '../../shared/styles/variables.scss' as *;
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: $dark-blue;
+    color: $white;
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .logo {
+            width: 200px;
+            height: 70px;
+        }
+    }
+
+    .user-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .user-name {
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            border: 1px solid $white;
+            padding: 8px 16px;
+            border-radius: 8px;
+
+            &:hover {
+                border-color: $gray;
+            }
+        }
+    }
+}

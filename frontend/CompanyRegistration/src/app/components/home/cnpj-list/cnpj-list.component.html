@@ -1,0 +1,44 @@
+<div class="cnpj-list-container">
+    <h2 class="title">Empresas Vinculadas</h2>
+
+    <div class="controls">
+        <label>
+            Itens por página:
+            <select>
+                <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+            </select>
+        </label>
+
+        <label>
+            Ordenar por:
+            <select>
+                <option *ngFor="let field of orderFields" [value]="field">{{ field }}</option>
+            </select>
+        </label>
+
+        <label>
+            Ordem:
+            <select>
+                <option value="asc">Ascendente</option>
+                <option value="desc">Descendente</option>
+            </select>
+        </label>
+    </div>
+
+    <ul class="company-list">
+        <li *ngFor="let company of companies" class="company-card">
+        <h3>{{ company.NomeEmpresarial || company.NomeFantasia }}</h3>
+        <p><strong>CNPJ:</strong> {{ company.Cnpj }}</p>
+        <p><strong>Abertura:</strong> {{ company.Abertura }}</p>
+        <p><strong>Natureza Jurídica:</strong> {{ company.NaturezaJuridica }}</p>
+        <p><strong>Atividade:</strong> {{ company.AtividadePrincipal }}</p>
+        <p><strong>Localização:</strong> {{ company.Municipio }}/{{ company.Uf }}</p>
+        </li>
+    </ul>
+
+    <div class="pagination">
+        <button>Anterior</button>
+        <span>Página 1</span>
+        <button>Próxima</button>
+    </div>
+</div>

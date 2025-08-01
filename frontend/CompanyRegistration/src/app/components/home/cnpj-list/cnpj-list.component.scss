@@ -1,0 +1,71 @@
+@use '../../../shared/styles/variables.scss' as *;
+
+.cnpj-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: $dark-blue;
+    color: $off-white;
+    padding: 30px 45px;
+    border-radius: 12px;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+    .title {
+        text-align: center;
+    }
+
+    .controls {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
+
+        label {
+            display: flex;
+            flex-direction: column;
+            font-size: 14px;
+
+            select {
+                margin-top: 6px;
+                padding: 8px;
+                border-radius: 6px;
+                border: none;
+                font-size: 14px;
+            }
+        }
+    }
+
+    .company-list {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        height: 380px;
+        padding: 10px 20px;
+        overflow-y: auto;
+
+        .company-card {
+            background-color: $off-white;
+            color: $dark-blue;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 10px;
+
+        button {
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
+
+        span {
+            font-size: 14px;
+        }
+    }
+}

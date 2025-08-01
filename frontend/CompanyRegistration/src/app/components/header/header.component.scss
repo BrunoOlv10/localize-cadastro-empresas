@@ -1,0 +1,13 @@
+@use '../../shared/styles/variables.scss' as *;
+
+.login-header {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    background-color: $dark-blue;
+
+      img {
+        width: 200px;
+        height: 70px;
+      }
+  }
