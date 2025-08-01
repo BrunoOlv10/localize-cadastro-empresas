@@ -1,9 +1,20 @@
 <div class="cnpj-form-container">
     <h2 class="title">Cadastrar CNPJ</h2>
     <p class="description">Informe abaixo o número do CNPJ que deseja vincular à sua conta.</p>
-    <form (submit)="onSubmit()">
+    <form [formGroup]="registerCnpjForm" (ngSubmit)="onSubmit()">
         <label for="cnpj">CNPJ</label>
-        <input type="text" id="cnpj" name="cnpj" placeholder="Digite o CNPJ" maxlength="18"/>
-        <button type="submit" class="submit-btn">Cadastrar</button>
+        <input type="text" id="cnpj" formControlName="cnpj" placeholder="Digite o CNPJ" maxlength="18"/>
+
+        <button [disabled]="isLoading" type="submit" class="submit-btn">
+            {{ isLoading ? 'Cadastrando...' : 'Cadastrar' }}
+        </button>
+
+        <div *ngIf="successMessage" class="success-message">
+            {{ successMessage }}
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
     </form>
 </div>

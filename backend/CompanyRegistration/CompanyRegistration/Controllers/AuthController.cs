@@ -19,11 +19,11 @@ namespace CompanyRegistration.Controllers
         public async Task<IActionResult> Register([FromBody] UserRegisterDto dto)
         {
             if (await _authService.IsEmailRegistered(dto.Email))
-                return BadRequest("Email já cadastrado.");
+                return BadRequest("Email já cadastrado");
 
             var user = await _authService.RegisterAsync(dto);
 
-            return Ok(new { message = "Usuário registrado com sucesso." });
+            return Ok(new { message = "Usuário registrado com sucesso" });
         }
 
         [HttpPost("login")]

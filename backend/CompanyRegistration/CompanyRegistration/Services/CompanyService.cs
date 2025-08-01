@@ -132,7 +132,8 @@ namespace CompanyRegistration.Services
 
             var response = new
             {
-                Total = totalCount,
+                TotalResults = totalCount,
+                totalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
                 Page = page,
                 PageSize = pageSize,
                 SortBy = sortBy,

@@ -1,44 +1,48 @@
 <div class="cnpj-list-container">
     <h2 class="title">Empresas Vinculadas</h2>
 
-    <div class="controls">
+    <div [formGroup]="filterForm" class="controls">
         <label>
             Itens por página:
-            <select>
-                <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+            <select formControlName="pageSize" (change)="onFiltersChange()">
+                <option *ngFor="let size of pageSizes" [value]="size" [disabled]="isLoading">{{ size }}</option>
             </select>
         </label>
 
         <label>
             Ordenar por:
-            <select>
-                <option *ngFor="let field of orderFields" [value]="field">{{ field }}</option>
+            <select formControlName="sortBy" (change)="onFiltersChange()">
+                <option *ngFor="let field of orderFields" [value]="field.value" [disabled]="isLoading">{{ field.label }}</option>
             </select>
         </label>
 
         <label>
             Ordem:
-            <select>
-                <option value="asc">Ascendente</option>
-                <option value="desc">Descendente</option>
+            <select formControlName="sortDirection" (change)="onFiltersChange()">
+                <option value="asc" [disabled]="isLoading">Ascendente</option>
+                <option value="desc" [disabled]="isLoading">Descendente</option>
             </select>
         </label>
     </div>
 
     <ul class="company-list">
+        <div *ngIf="isLoading" class="loading">Carregando...</div>
         <li *ngFor="let company of companies" class="company-card">
-        <h3>{{ company.NomeEmpresarial || company.NomeFantasia }}</h3>
-        <p><strong>CNPJ:</strong> {{ company.Cnpj }}</p>
-        <p><strong>Abertura:</strong> {{ company.Abertura }}</p>
-        <p><strong>Natureza Jurídica:</strong> {{ company.NaturezaJuridica }}</p>
-        <p><strong>Atividade:</strong> {{ company.AtividadePrincipal }}</p>
-        <p><strong>Localização:</strong> {{ company.Municipio }}/{{ company.Uf }}</p>
+            <h3>{{ company.nome || company.fantasia || "N/A" }}</h3>
+            <p><strong>CNPJ:</strong> {{ company.cnpj || "N/A" }}</p>
+            <p><strong>Abertura:</strong> {{ company.abertura || "N/A" }}</p>
+            <p><strong>Atividade:</strong> {{ company.atividadePrincipal || "N/A" }}</p>
+            <p><strong>Natureza Jurídica:</strong> {{ company.naturezaJuridica || "N/A" }}</p>
+            <p><strong>Localização:</strong> {{ company.municipio || "N/A"  }}/{{ company.uf || "N/A" }}</p>
         </li>
     </ul>
 
-    <div class="pagination">
-        <button>Anterior</button>
-        <span>Página 1</span>
-        <button>Próxima</button>
+    <div *ngIf="!isLoading" class="pagination">
+        <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+        <div class="data-pagination">
+            <span>Total de resultados: {{ totalResults }}</span>
+            <span>Página {{ currentPage }}</span>
+        </div>
+        <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Próxima</button>
     </div>
 </div>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { RouterModule, Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
@@ -53,18 +53,20 @@ export class RegisterComponent {
         error: (err) => {
           this.isLoading = false;
 
-          if (typeof err.error === 'string') {
-            this.errorMessage = err.error;
+          if (err.error.errors) {
+            const errorsObj = err.error.errors;
+            const firstField = Object.keys(errorsObj)[0];
+
+            if (firstField && errorsObj[firstField].length > 0) {
+              this.errorMessage = errorsObj[firstField][0];
+            } else {
+              this.errorMessage = 'Erro de validação.';
+            }
+
             return;
           }
 
-          if (err.error.errors) {
-            const validationErrors = Object.values(err.error.errors)
-              .flat()
-              .join(' ');
-            this.errorMessage = validationErrors;
-            return;
-          }
+          this.errorMessage = 'Erro inesperado ao registrar.';
         }
       });
     }

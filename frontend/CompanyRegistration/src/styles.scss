@@ -25,6 +25,11 @@ button {
     &:hover {
       background: $gold;
     }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+    }
 }
 
 .success-message, .error-message {

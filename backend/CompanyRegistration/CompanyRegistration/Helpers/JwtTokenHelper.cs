@@ -11,7 +11,7 @@ namespace CompanyRegistration.Helpers
         public static string GenerateToken(User user, string key)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var keyBytes = Encoding.ASCII.GetBytes(key);
+            var keyBytes = Encoding.UTF8.GetBytes(key);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

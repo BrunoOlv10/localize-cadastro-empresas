@@ -1,4 +1,5 @@
-﻿using CompanyRegistration.Extensions;
+﻿using CompanyRegistration.DTOs;
+using CompanyRegistration.Extensions;
 using CompanyRegistration.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,15 +19,15 @@ namespace CompanyRegistration.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> AddCompany([FromBody] string cnpj)
+        public async Task<IActionResult> AddCompany([FromBody] CnpjRegisterDto dto)
         {
             try
             {
                 int userId = User.GetUserId();
 
-                var company = await _companyService.AddCompanyAsync(cnpj, userId);
+                var company = await _companyService.AddCompanyAsync(dto.Cnpj, userId);
 
-                return Ok(company);
+                return Ok(new { message = "CNPJ cadastrado com sucesso" });
             }
             catch (ArgumentException ex)
             {

@@ -40,18 +40,43 @@
         display: flex;
         flex-direction: column;
         gap: 30px;
-        height: 380px;
+        max-height: 520px;
+        width: 450px;
         padding: 10px 20px;
         overflow-y: auto;
 
+        .loading {
+            text-align: center;
+        }
+
         .company-card {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
             background-color: $off-white;
             color: $dark-blue;
             padding: 16px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+            h3 {
+                color: $gold;
+            }
+        }
+
+        &::-webkit-scrollbar{
+            background-color: $white;
+            width: 15px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $scroll-bar;
+            border: 4px solid $white;
+            border-radius: 10px;
         }
     }
+
+
 
     .pagination {
         display: flex;
@@ -64,8 +89,16 @@
             border-radius: 6px;
         }
 
-        span {
-            font-size: 14px;
+        .data-pagination {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 5px;
+            
+            span {
+                font-size: 14px;
+            }
         }
+
     }
 }

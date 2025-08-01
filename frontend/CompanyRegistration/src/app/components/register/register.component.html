@@ -5,13 +5,13 @@
         <h1 class="title">Crie sua conta</h1>
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <label for="nome">Nome</label>
-            <input type="text" formControlName="nome" placeholder="Digite seu nome" />
+            <input type="text" id="nome" formControlName="nome" maxlength="100" placeholder="Digite seu nome" />
 
             <label for="email">Email</label>
-            <input type="email" formControlName="email" placeholder="Digite seu email" />
+            <input type="email" id="email" formControlName="email" maxlength="100" placeholder="Digite seu email" />
 
             <label for="senha">Senha</label>
-            <input type="password" formControlName="senha" placeholder="Digite sua senha" />
+            <input type="password" id="senha" formControlName="senha" maxlength="255" placeholder="Digite sua senha" />
 
             <button [disabled]="isLoading" type="submit" class="register-btn">
                 {{ isLoading ? 'Cadastrando...' : 'Cadastrar' }}

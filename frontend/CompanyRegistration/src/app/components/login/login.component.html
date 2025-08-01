@@ -5,10 +5,10 @@
         <h1 class="title">Login</h1>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <label for="email">Email</label>
-            <input type="email" formControlName="email" placeholder="Digite seu email" />
+            <input type="email" id="email" formControlName="email" placeholder="Digite seu email" />
 
             <label for="senha">Senha</label>
-            <input type="password" formControlName="senha" placeholder="Digite sua senha" />
+            <input type="password" id="senha" formControlName="senha" placeholder="Digite sua senha" />
 
             <button [disabled]="isLoading" type="submit" class="login-btn">
                 {{ isLoading ? 'Entrando...' : 'Entrar' }}
